@@ -38,8 +38,8 @@ st.markdown(
     """
     <style>
     /* Apply Arial font to all text */
-    body {
-        font-family: Arial, sans-serif;
+    body, h1, h2, h3, h4, h5, h6, p, span, div {
+        font-family: Arial, sans-serif !important;
     }
     </style>
     """,
