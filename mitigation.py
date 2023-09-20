@@ -17,8 +17,8 @@ lift = Image.open("./Images/lift.png").convert("RGBA")
 shaft = Image.open("./Images/shaft.png").convert("RGBA")
 
 # Create a blank canvas with the size of the first image (ground in this case)
-# composite = Image.new("RGBA", ground.size, (135, 206, 235, 255))
-composite = Image.new("RGBA", ground.size, (14, 166, 223, 126))
+composite = Image.new("RGBA", ground.size, (135, 206, 235, 255))
+# composite = Image.new("RGBA", ground.size, (14, 166, 223, 126))
 
 # Function to recolor an image while preserving transparency
 from PIL import Image, ImageOps
