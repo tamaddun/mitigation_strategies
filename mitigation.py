@@ -57,7 +57,7 @@ st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize Scene</h1>", unsafe_
 # Create a dropdown menu to select a plant type
 selected_landscape = st.sidebar.selectbox("Choose Landscape Type", ["Rainforest", "Desert"])
 selected_facility = st.sidebar.selectbox("Choose Building Type", ["Wide", "Narrow"])
-selected_vegetation = st.sidebar.selectbox("Choose Vegetation Type", ["Evergreen", "Perennial"])
+selected_vegetation = st.sidebar.selectbox("Choose Vegetation Type", ["Conifers", "Succulents"])
 
 # Create color pickers to set colors to images
 facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFAF6")  # Default color is white
@@ -125,9 +125,9 @@ if selected_facility == "Wide":
     composite = Image.alpha_composite(composite, facility2_recolored)
 elif selected_facility == "Narrow":
     composite = Image.alpha_composite(composite, facility1_recolored)
-if selected_vegetation == "Evergreen":
+if selected_vegetation == "Conifers":
     composite = Image.alpha_composite(composite, plant1_recolored)
-elif selected_vegetation == "Perennial":
+elif selected_vegetation == "Succulents":
     composite = Image.alpha_composite(composite, plant2_recolored)
 composite = Image.alpha_composite(composite, frame_recolored)
 composite = Image.alpha_composite(composite, text_recolored)
