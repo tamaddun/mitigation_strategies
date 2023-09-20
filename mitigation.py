@@ -61,6 +61,8 @@ st.markdown(
 # Add a title to the Streamlit sidebar and customize its font size
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize Scene</h1>", unsafe_allow_html=True)
 
+# Create a dropdown menu to select a plant type
+selected_plant = st.sidebar.selectbox("Choose Plant Type", ["Rainforest", "Desert"])
 # Create color pickers to set colors to images
 # ground_color = st.sidebar.color_picker("Choose Ground Color", "#808080")  # Default color is gray
 facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFFFF")  # Default color is white
@@ -69,8 +71,6 @@ casks_color = st.sidebar.color_picker("Choose Cask Color", "#FFFFFF")  # Default
 light_color = st.sidebar.color_picker("Choose Light", '#FFFF00')  # Default color is white
 shaft_color = st.sidebar.color_picker("Choose Forklift Color", '#FFFFFF')  # Default color is white
 cargo_color = st.sidebar.color_picker("Choose Truck Color", '#FFFFFF')  # Default color is white
-# Create a dropdown menu to select a plant type
-selected_plant = st.sidebar.selectbox("Choose Plant Type", ["Rainforest", "Desert"])
 
 # Recolor the images based on selected images
 ground_recolored = recolor_image(ground, "#808080")
