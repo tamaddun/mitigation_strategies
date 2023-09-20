@@ -59,7 +59,7 @@ st.markdown(
 )
 
 # Add a title to the Streamlit sidebar and customize its font size
-st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize Scene</h1>", unsafe_allow_html=True)
+st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize</h1>", unsafe_allow_html=True)
 
 # Create a dropdown menu to select a plant type
 selected_vegetation = st.sidebar.selectbox("Choose Vegetation Type", ["Rainforest", "Desert"])
