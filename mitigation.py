@@ -62,7 +62,7 @@ st.markdown(
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize Scene</h1>", unsafe_allow_html=True)
 
 # Create a dropdown menu to select a plant type
-selected_plant = st.sidebar.selectbox("Choose Vegetation Type", ["Rainforest", "Desert"])
+selected_vegetation = st.sidebar.selectbox("Choose Vegetation Type", ["Rainforest", "Desert"])
 # Create color pickers to set colors to images
 # ground_color = st.sidebar.color_picker("Choose Ground Color", "#808080")  # Default color is gray
 facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFFFF")  # Default color is white
@@ -99,9 +99,9 @@ composite = Image.alpha_composite(composite, truck_recolored)
 composite = Image.alpha_composite(composite, cargo_recolored)
 composite = Image.alpha_composite(composite, cloud_recolored)
 composite = Image.alpha_composite(composite, light_recolored)  # Use the rotated light image
-if selected_plant == "Rainforest":
+if selected_vegetation == "Rainforest":
     composite = Image.alpha_composite(composite, plant1_recolored)
-elif selected_plant == "Desert":
+elif selected_vegetation == "Desert":
     composite = Image.alpha_composite(composite, plant2_recolored)
 
 # Display the composite image using Streamlit and customize its font size
