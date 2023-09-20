@@ -67,8 +67,8 @@ facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFFFF")  # 
 fence_color = st.sidebar.color_picker("Choose Fence Color", '#FFFFFF')  # Default color is white
 casks_color = st.sidebar.color_picker("Choose Cask Color", "#FFFFFF")  # Default color is white
 light_color = st.sidebar.color_picker("Choose Light", '#FFFF00')  # Default color is white
-shaft_color = st.sidebar.color_picker("Choose Forklift Color", '#f36e21')  # Default color is white
-cargo_color = st.sidebar.color_picker("Choose Truck Color", '#f36e21')  # Default color is white
+shaft_color = st.sidebar.color_picker("Choose Forklift Color", '#FFFFFF')  # Default color is white
+cargo_color = st.sidebar.color_picker("Choose Truck Color", '#FFFFFF')  # Default color is white
 # Create a dropdown menu to select a plant type
 selected_plant = st.sidebar.selectbox("Choose Plant Type", ["Rainforest", "Desert"])
 
