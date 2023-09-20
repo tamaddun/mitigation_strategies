@@ -62,7 +62,7 @@ st.markdown(
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize Scene</h1>", unsafe_allow_html=True)
 
 # Create a dropdown menu to select a plant type
-selected_plant = st.sidebar.selectbox("Choose Plant Type", ["Rainforest", "Desert"])
+selected_plant = st.sidebar.selectbox("Choose Vegetation Type", ["Rainforest", "Desert"])
 # Create color pickers to set colors to images
 # ground_color = st.sidebar.color_picker("Choose Ground Color", "#808080")  # Default color is gray
 facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFFFF")  # Default color is white
