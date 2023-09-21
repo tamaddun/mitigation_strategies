@@ -1,5 +1,8 @@
 import streamlit as st
 from PIL import Image, ImageOps
+import cv2
+import numpy as np
+
 
 # Load images with transparent backgrounds
 ground = Image.open("./Images_resized/ground.png").convert("RGBA")
@@ -55,12 +58,12 @@ st.markdown(
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Customize Scene</h1>", unsafe_allow_html=True)
 
 # Create a dropdown menu to select a plant type
-selected_landscape = st.sidebar.selectbox("Choose Landscape Type", ["Rainforest", "Desert"])
+selected_landscape = st.sidebar.selectbox("Choose Landscape Type", ["Forest", "Desert"])
 selected_facility = st.sidebar.selectbox("Choose Building Type", ["Wide", "Narrow"])
-selected_vegetation = st.sidebar.selectbox("Choose Vegetation Type", ["Conifers", "Succulents"])
+selected_vegetation = st.sidebar.selectbox("Choose Vegetation Type", ["Conifers", "Succulent"])
 
 # Create color pickers to set colors to images
-facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFAF6")  # Default color is white
+# facility_color = st.sidebar.color_picker("Choose Facility Color", "#FFFFFF")  # Default color is white
 fence_color = st.sidebar.color_picker("Choose Fence Color", '#FFFFFF')  # Default color is white
 casks_color = st.sidebar.color_picker("Choose Casks Color", '#ECFBFF')  # Default color is white
 light_color = st.sidebar.color_picker("Choose Light", '#FFFF00')  # Default color is white
@@ -85,8 +88,8 @@ def recolor_image(image, color):
 ground_recolored = recolor_image(ground, "#808080")
 landscape1_recolored = recolor_image(landscape1, "#858585")
 landscape2_recolored = recolor_image(landscape2, "#858585")
-facility1_recolored = recolor_image(facility1, facility_color)
-facility2_recolored = recolor_image(facility2, facility_color)
+facility1_recolored = recolor_image(facility1, "#FFFFFF")
+facility2_recolored = recolor_image(facility2, "#FFFFFF")
 fence_recolored = recolor_image(fence, fence_color)
 casks_recolored = recolor_image(casks, casks_color)
 pole_recolored = recolor_image(pole, "#808080")
@@ -106,7 +109,6 @@ text_recolored = recolor_image(text, "#FFFFFF")
 # Overlay each image separately on a blank canvas
 composite = Image.alpha_composite(composite, ground_recolored)
 composite = Image.alpha_composite(composite, fence_recolored)
-# composite = Image.alpha_composite(composite, turf_recolored)
 composite = Image.alpha_composite(composite, casks_recolored)
 composite = Image.alpha_composite(composite, pole_recolored)
 composite = Image.alpha_composite(composite, light_recolored)
@@ -117,17 +119,51 @@ composite = Image.alpha_composite(composite, wheels_recolored)
 composite = Image.alpha_composite(composite, truck_recolored)
 composite = Image.alpha_composite(composite, cloud_recolored)
 composite = Image.alpha_composite(composite, sun_recolored)
-if selected_landscape == "Rainforest":
+if selected_landscape == "Forest":
     composite = Image.alpha_composite(composite, landscape1_recolored)
 elif selected_landscape == "Desert":
     composite = Image.alpha_composite(composite, landscape2_recolored)
+
+def apply_texture(img, texture):
+    # Convert the PIL Image to a NumPy array
+    img_array = np.array(img)
+
+    # Create a mask for the white cutout (non-transparent portion)
+    white_mask = (img_array[:, :, 0] == 255) & (img_array[:, :, 1] == 255) & (img_array[:, :, 2] == 255)
+
+    # Resize the texture image to match the truck image dimensions
+    texture = cv2.resize(texture, (img_array.shape[1], img_array.shape[0]))
+
+    # Apply the texture only to the white cutout portion
+    result = img_array.copy()
+    result[white_mask, :3] = texture[white_mask, :3]
+
+    # Convert the modified NumPy array back to a PIL Image
+    result_image = Image.fromarray(result)
+
+    return result_image
+
+# Create a dictionary to map texture names to file paths (assuming textures are in jpg format)
+textures = {
+    "Texture 1": "./textures/texture1.jpg",
+    "Texture 2": "./textures/texture2.jpg",
+    "Texture 3": "./textures/texture3.jpg",
+}
+# Apply texture to facility1
+st.sidebar.header("Customize Facility")
+selected_texture_facility = st.sidebar.selectbox("Choose Texture for Facility", ["Texture 1", "Texture 2", "Texture 3"])
+texture_img_facility = cv2.imread(textures[selected_texture_facility], cv2.IMREAD_UNCHANGED)
+texture_img_facility = texture_img_facility[:, :, ::-1]  # BGR to RGB conversion
+facility1_recolored = apply_texture(facility1_recolored, texture_img_facility)
+facility2_recolored = apply_texture(facility2_recolored, texture_img_facility)
 if selected_facility == "Wide":
     composite = Image.alpha_composite(composite, facility2_recolored)
 elif selected_facility == "Narrow":
     composite = Image.alpha_composite(composite, facility1_recolored)
+
 if selected_vegetation == "Conifers":
     composite = Image.alpha_composite(composite, plant1_recolored)
-elif selected_vegetation == "Succulents":
+elif selected_vegetation == "Succulent":
     composite = Image.alpha_composite(composite, plant2_recolored)
 composite = Image.alpha_composite(composite, frame_recolored)
 composite = Image.alpha_composite(composite, text_recolored)
